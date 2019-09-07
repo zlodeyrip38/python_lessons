@@ -1,11 +1,11 @@
-a = (input("ведите имя: "))
-b = (input("ведите фамилию: "))
-sum = a + b
+a = (input(" введите имя : "))
+b = (input(" введите фамилию : "))
+d = (input(" введите пароль : "))
 
-print (a, "+", b, " = ", sum)
+print (a, b)
 
-text = a, "+", b, " = ", sum
+
 somefile = open('имя фамилия.txt','a')
-print(text, file=somefile)
+print(a, file=somefile)
 
 somefile.close()
