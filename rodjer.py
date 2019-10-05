@@ -69,7 +69,10 @@ if ready == 'да':
 
         print(numder1, sign, numder2)
 
-
+        if sign == '+':
+            correct_answer = numder1 + numder2
+        if sign == '-':
+            correct_answer = numder1 - numder2
 
 else:
     print('''Передумал? Хорошо, может как-нибудь в следующий раз...
