@@ -21,6 +21,8 @@ if ready == 'да':
 
     answers_quantity = ''  # количество примеров
     count_to = ''  # до скольки будем считать
+    correct_answers = 0  # количество правильных ответов
+    fails = 0  # количество ошибок
 
     while not answers_quantity.isdigit():
         print('Сколько примеров ты готов решить?')
@@ -57,22 +59,49 @@ if ready == 'да':
     count_to = int(count_to)
 
     for question in range(answers_quantity):
-        print('пример ' + str(question+1))
 
         numder1 = randint(1, count_to)
         numder2 = randint(1, count_to)
-
-        while numder1 < numder2:
-            numder1 = randint(1, count_to)
-
         sign = choice('+-')
 
+        if sign == '+':
+            while numder1 + numder2 > count_to:
+                numder1 = randint(1, count_to)
+                numder2 = randint(1, count_to)
+
+            correct_answer = numder1 + numder2
+
+        if sign == '-':
+            while numder1 < numder2:
+                numder1 = randint(1, count_to)
+                numder2 = randint(1, count_to)
+
+            correct_answer = numder1 - numder2
+
+        print('пример ' + str(question+1))
         print(numder1, sign, numder2)
 
-        if sign == '+':
-            correct_answer = numder1 + numder2
-        if sign == '-':
-            correct_answer = numder1 - numder2
+
+        student_answer = input()
+
+        while not student_answer.isdigit():
+            print('Должна быть цифра')
+            student_answer = input()
+
+        if correct_answer == int(student_answer):
+            print('Правильно, молодец')
+            correct_answers += 1
+        else:
+            print('Неправильно')
+            print('Правильныый ответ: ' + str (correct_answer))
+            fails += 1
+
+    if fails == 0:
+        print('Молодец ты ответил на все вопросы провильно')
+    else:
+        print()
+        print('Правильных ответов: ' + str (correct_answers))
+        print('Ошибок: ' + str(fails))
 
 else:
     print('''Передумал? Хорошо, может как-нибудь в следующий раз...
