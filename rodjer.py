@@ -1,8 +1,9 @@
 from time import sleep
+from timeit import default_timer
 from random import randint, choice
 
 
-print('Привет меня завут Роджер. А тебя как ?')
+print('Привет меня зовут Роджер. А тебя как ?')
 name = input()
 name = name.title()
 print('Приятно пазнакомиться, ' + name)
@@ -23,6 +24,7 @@ if ready == 'да':
     count_to = ''  # до скольки будем считать
     correct_answers = 0  # количество правильных ответов
     fails = 0  # количество ошибок
+    answers_time = 0  # затраченое время на все ответы
 
     while not answers_quantity.isdigit():
         print('Сколько примеров ты готов решить?')
@@ -79,14 +81,22 @@ if ready == 'да':
             correct_answer = numder1 - numder2
 
         print('пример ' + str(question+1))
-        print(numder1, sign, numder2)
 
 
-        student_answer = input()
+        student_answer = ''
 
         while not student_answer.isdigit():
-            print('Должна быть цифра')
+            print(numder1, sign, numder2)
+
+            start = default_timer()
             student_answer = input()
+            stop =default_timer()
+            answers_time += round(stop-start)
+
+
+            if not student_answer.isdigit():
+                print('Должна быть цифра')
+
 
         if correct_answer == int(student_answer):
             print('Правильно, молодец')
@@ -96,13 +106,26 @@ if ready == 'да':
             print('Правильныый ответ: ' + str (correct_answer))
             fails += 1
 
+    if answers_time < 60:
+        seconds = str (answers_time)
+        time_spent = seconds + ' секунд'
+    else:
+        minutes = answers_time // 60
+        seconds = str(answers_time - (minutes*60))
+        if seconds:
+            time_spent = str(minutes) + ' минут и ' + str(seconds) + ' секунд'
+        else:
+            time_spent = str(minutes) + ' минут'
+
+
+
     if fails == 0:
-        print('Молодец ты ответил на все вопросы провильно')
+        print('Молодец ты ответил на все вопросы провильно за ' + time_spent)
     else:
         print()
         print('Правильных ответов: ' + str (correct_answers))
         print('Ошибок: ' + str(fails))
-
+        print('Затраченое время ' + time_spent)
 else:
     print('''Передумал? Хорошо, может как-нибудь в следующий раз...
 Пока!''')
