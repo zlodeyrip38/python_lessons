@@ -1,0 +1,13 @@
+('σσσσ', ' + ', 'κκκκ', ' = ', 'σσσσκκκκ')
+<built-in function sum>
+bbbbddddd
+('Δενθρ', 'Òβεπδξυλεα')
+ΔενθρÒβεπδξυλεα
+('eee', 'rrr')
+rrrttt
+dddyyy
+rioffvfv
+fffvfvrfrrfrf
+ΔενθρÒβεπδξυλεα
+None
+('ggggg', 'ddddd')

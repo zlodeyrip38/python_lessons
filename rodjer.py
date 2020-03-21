@@ -3,28 +3,67 @@ from timeit import default_timer
 from random import randint, choice
 
 
-print('Привет меня зовут Роджер. А тебя как ?')
-name = input()
-name = name.title()
-print('Приятно пазнакомиться, ' + name)
-sleep(1)
-print('Давай проверим твои знания в математике.')
-sleep(1)
+def select_mode():
+    print('''
+    Режимы:
+    1 - тренировка
+    0 - выход
+    ''')
 
-print('Ты готов? (да или нет)')
-ready = input()
-while ready not in {'да', 'нет'}:
-    print('''Должно быть 'да' или 'нет'
-Введи заново''')
-    ready = input()
+    mode = ''
+    while not mode.isdigit():
+        print('Выбери режим:')
+        mode = input()
+        while not mode.isdigit():
+            print('Должна быть цифра')
+            mode = input()
 
-if ready == 'да':
+    return mode
+
+
+# функция возврата временных окончаний
+def time_endings(digit):
+    last_digit = int(digit[-1])
+
+    if 10<int(digit)<15:
+        return ''
+    else:
+
+        if last_digit == 1:
+            return 'у'
+        elif 1<last_digit<5:
+            return 'ы'
+        else:
+            return ''
+
+# функция возврата временных окончаний
+def time_spent(time_in_seconds):
+    if time_in_seconds < 60:
+        seconds = str (time_in_seconds)
+        time_spent = seconds + ' секунд' + time_endings(seconds)
+    else:
+        minutes = time_in_seconds // 60
+        seconds = str(time_in_seconds - (minutes*60))
+        if int(seconds) > 0:
+            time_spent = str(minutes) + ' минут' + time_endings(str(minutes)) + ' и ' + str(seconds) + ' секунд' + \
+                         time_endings(str(seconds))
+        else:
+            time_spent = str(minutes) + ' минут' + time_endings(str(minutes))
+
+    return time_spent
+
+
+# функция вывода примеров и их проверки
+def count():
 
     answers_quantity = ''  # количество примеров
     count_to = ''  # до скольки будем считать
     correct_answers = 0  # количество правильных ответов
     fails = 0  # количество ошибок
     answers_time = 0  # затраченое время на все ответы
+
+    sleep(1)
+    print('Давай проверим твои знания в математике.')
 
     while not answers_quantity.isdigit():
         print('Сколько примеров ты готов решить?')
@@ -106,26 +145,27 @@ if ready == 'да':
             print('Правильныый ответ: ' + str (correct_answer))
             fails += 1
 
-    if answers_time < 60:
-        seconds = str (answers_time)
-        time_spent = seconds + ' секунд'
-    else:
-        minutes = answers_time // 60
-        seconds = str(answers_time - (minutes*60))
-        if seconds:
-            time_spent = str(minutes) + ' минут и ' + str(seconds) + ' секунд'
-        else:
-            time_spent = str(minutes) + ' минут'
-
-
-
     if fails == 0:
-        print('Молодец ты ответил на все вопросы провильно за ' + time_spent)
+        print('Молодец ты ответил на все вопросы провильно за ' + time_spent(answers_time))
     else:
         print()
         print('Правильных ответов: ' + str (correct_answers))
         print('Ошибок: ' + str(fails))
-        print('Затраченое время ' + time_spent)
-else:
-    print('''Передумал? Хорошо, может как-нибудь в следующий раз...
-Пока!''')
+        print('Затраченое время ' + time_spent(answers_time))
+
+# основной блок программы
+print('Привет меня зовут Роджер. А тебя как ?')
+name = input()
+name = name.title()
+print('Приятно пазнакомиться, ' + name)
+
+sleep(1)
+
+while True:
+    mode = select_mode()
+    if mode == '1':
+        count()
+    elif mode == "0":
+        break
+    else:
+        pass
